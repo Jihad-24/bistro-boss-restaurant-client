@@ -15,7 +15,7 @@ const Menu = () => {
     const desserts = menu.filter(item => item.category === 'dessert')
     const salad = menu.filter(item => item.category === 'salad')
     const pizza = menu.filter(item => item.category === 'pizza')
-    const soup = menu.filter(item => item.category === 'soup')
+    const soups = menu.filter(item => item.category === 'soup')
     const offered = menu.filter(item => item.category === 'offered')
 
     return (
@@ -41,28 +41,28 @@ const Menu = () => {
             {/* desset menu items */}
             <MenuCategory
                 items={desserts}
-                title={"DESSERTS"}
+                title={"desserts"}
                 coverImg={dessertImg}
                 subTitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}
             ></MenuCategory>
             {/* pizza menu items */}
             <MenuCategory
                 items={pizza}
-                title={"PIZZA"}
+                title={"pizza"}
                 coverImg={pizzaImg}
                 subTitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}
             ></MenuCategory>
             {/* SALADS menu items */}
             <MenuCategory
                 items={salad}
-                title={"SALADS"}
+                title={"salad"}
                 coverImg={saladImg}
                 subTitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}
             ></MenuCategory>
             {/* SOUPS menu items */}
             <MenuCategory
-                items={soup}
-                title={"SOUPS"}
+                items={soups}
+                title={"soups"}
                 coverImg={soupImg}
                 subTitle={"Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}
             ></MenuCategory>
