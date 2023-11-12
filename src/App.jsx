@@ -1,14 +1,17 @@
 
+import { useState } from 'react'
 import './App.css'
 
 function App() {
 
+  const react = useState();
+
   return (
     <>
       <button className="btn btn-info">Info</button>
-<button className="btn btn-success">Success</button>
-<button className="btn btn-warning">Warning</button>
-<button className="btn btn-error">Error</button>
+      <button className="btn btn-success">Success</button>
+      <button className="btn btn-warning">Warning</button>
+      <button className="btn btn-error">Error</button>
     </>
   )
 }
