@@ -1,15 +1,17 @@
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../../providers/AuthProviders";
-import { useContext } from "react";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAuth from "../../hooks/useAuth";
+import SocialLogin from "../../components/SocialLogin/SocialLogin";
 
 
 const SignUp = () => {
-    const { createUser,updateUserProfile } = useContext(AuthContext);
+    const { createUser, updateUserProfile } = useAuth();
+    const axiosPublic = useAxiosPublic();
     const { register, handleSubmit, reset, formState: { errors } } = useForm()
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     const onSubmit = (data) => {
         // console.log(data)
@@ -18,21 +20,32 @@ const SignUp = () => {
         createUser(email, password)
             .then(result => {
                 console.log(result.user);
-                updateUserProfile(data.name , data.PhotoURL)
-                .then(() => {
-                    console.log('user profile update');
-                    reset();
-                    Swal.fire({
-                        position: "top-end",
-                        icon: "success",
-                        title: "profile has been updated",
-                        showConfirmButton: false,
-                        timer: 1500
-                      });
-                      navigate('/')
-                }).catch((error) => {
-                    console.log(error.message);
-                });
+                updateUserProfile(data.name, data.PhotoURL)
+                    .then(() => {
+                        // console.log('user profile update');
+                        // create user entry in the database
+                        const userInfo = {
+                            name: data.name,
+                            email: data.email,
+                        }
+                        axiosPublic.post('/users', userInfo)
+                            .then(res => {
+                                if (res.data.insertedId) {
+                                    reset();
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "User has been Created",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate('/')
+                                }
+                            })
+
+                    }).catch((error) => {
+                        console.log(error.message);
+                    });
             })
             .catch(error => {
                 console.log(error.message);
@@ -110,7 +123,8 @@ const SignUp = () => {
                                 <input className="btn btn-primary" type="submit" value="Sign Up" />
                             </div>
                         </form>
-                        <p className='text-[#D1A054] text-center pb-4'><small>Already registered? <Link to={'/login'}>Go to log in</Link></small></p>
+                        <p className='text-[#D1A054] text-center'><small>Already registered? <Link to={'/login'}>Go to log in</Link></small></p>
+                    <SocialLogin></SocialLogin>
                     </div>
                 </div>
             </div>
