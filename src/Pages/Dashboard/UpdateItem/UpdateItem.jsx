@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { useLoaderData } from "react-router-dom";
 import SectionTitle from "../../../components/sectionTitle/SectionTitle";
 import { useForm } from "react-hook-form";
@@ -36,8 +37,8 @@ const UpdateItem = () => {
             // 
             const menuRes = await axiosSecure.patch(`/menu/${_id}`, menuItem)
             console.log(menuRes.data);
-            if (menuRes.data.insertedId) {
-                reset();
+            if (menuRes.data.modifiedCount > 0) {
+                // reset();
                 // show success alert
                 Swal.fire({
                     position: "top-end",
