@@ -4,14 +4,14 @@ import useCart from "../../../hooks/useCart";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
-
+import { Link } from "react-router-dom";
 
 
 const Cart = () => {
 
     const [cart, refetch] = useCart();
-    const axiosSecure = useAxiosSecure();
     const totalPrice = cart.reduce((total, item) => total + item.price, 0)
+    const axiosSecure = useAxiosSecure();
 
     const handleDelete = id => {
         Swal.fire({
@@ -49,7 +49,12 @@ const Cart = () => {
             <div className="flex justify-evenly mb-10">
                 <h2 className="text-3xl font-semibold">Items: {cart.length}</h2>
                 <h2 className="text-3xl font-semibold">Total Price: {totalPrice}</h2>
-                <button className="btn btn-primary px-5">Pay</button>
+                {cart.length ? <Link to={'/dashboard/payment'}>
+                    <button className="btn btn-primary px-5">Pay</button>
+                </Link>
+                    :
+                    <button disabled className="btn btn-primary px-5">Pay</button>
+                }
             </div>
             <div className="overflow-x-auto">
                 <table className="table w-full">

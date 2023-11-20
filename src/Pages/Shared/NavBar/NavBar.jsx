@@ -48,14 +48,7 @@ const NavBar = () => {
                 </button>
             </Link>
         </li>
-        {
-            user ? <>
-                {/* <span>{user?.displayName}</span> */}
-                <button onClick={handleLogOut} className="btn btn-ghost btn-sm">Sign Out</button>
-            </> : <>
-                <li><NavLink to={'/login'}>Login</NavLink></li>
-            </>
-        }
+
     </>
 
     return (
@@ -78,7 +71,14 @@ const NavBar = () => {
                     </ul>
                 </div>
                 <div className="navbar-end">
-                    <button className="btn">Get started</button>
+                    {
+                        user ? <>
+                            {/* <span>{user?.displayName}</span> */}
+                            <button onClick={handleLogOut} className="btn btn-ghost btn-sm">Sign Out</button>
+                        </> : <>
+                            <Link to={'/login'}> <button className="btn btn-ghost btn-sm">Login</button></Link>
+                        </>
+                    }
                 </div>
             </div>
         </>
