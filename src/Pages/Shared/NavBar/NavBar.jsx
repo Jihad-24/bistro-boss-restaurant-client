@@ -1,45 +1,54 @@
 import { Link, NavLink } from "react-router-dom";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import { FaShoppingCart } from 'react-icons/fa';
 import useAuth from "../../../hooks/useAuth";
 import useCart from "../../../hooks/useCart";
+import useAdmin from "../../../hooks/useAdmin";
 
 
 const NavBar = () => {
     const { user, logOut } = useAuth();
     const [cart] = useCart();
+    const [isAdmin]=useAdmin();
 
     const handleLogOut = () => {
         logOut()
-            .then(() => {
-                Swal.fire({
-                    title: "Log Out Successfull",
-                    showClass: {
-                        popup: `
-                    animate__animated
-                    animate__fadeInUp
-                    animate__faster
-                  `
-                    },
-                    hideClass: {
-                        popup: `
-                    animate__animated
-                    animate__fadeOutDown
-                    animate__faster
-                  `
-                    }
-                });
-            })
-            .catch(error => {
-                console.log(error.message);
-            })
+            // .then((res) => {
+            //     if (res) {
+            //         Swal.fire({
+            //             title: "Log Out Successfull",
+            //             showClass: {
+            //                 popup: `
+            //             animate__animated
+            //             animate__fadeInUp
+            //             animate__faster
+            //           `
+            //             },
+            //             hideClass: {
+            //                 popup: `
+            //             animate__animated
+            //             animate__fadeOutDown
+            //             animate__faster
+            //           `
+            //             }
+            //         });
+            //     }
+            // })
+            // .catch(error => {
+            //     console.log(error.message);
+            // })
     }
 
     const navLinks = <>
         <li><NavLink to={'/'}>Home</NavLink></li>
         <li><NavLink to={'/menu'}>Our Menu</NavLink></li>
-        <li><NavLink to={'/secret'}>Our Secret</NavLink></li>
         <li><NavLink to={'/order/salad'}>Order Food</NavLink></li>
+        {
+            user && isAdmin && <li><NavLink to={'/dashboard/adminHome'}>Dashboard</NavLink></li>
+        }
+        {
+            user && !isAdmin && <li><NavLink to={'/dashboard/userHome'}>Dashboard</NavLink></li>
+        }
         <li>
             <Link to={'/dashboard/cart'}>
                 <button className="btn">
